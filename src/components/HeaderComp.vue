@@ -15,6 +15,7 @@
               <b-button
                 pill
                 :pressed.sync="$store.state.isVolumeRandom"
+                title="Random sounds volume"
                 class="btn-xs"
                 variant="outline-teal"
               >
