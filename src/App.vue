@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="background">
+    <div class="background bg-dark-0">
       <header>
         <Navbar />
         <HeaderComp />
@@ -36,7 +36,7 @@ html {
 }
 
 #app {
-  background-color: black;
+  background-color: #424242;
   height: 100%;
 }
 
@@ -46,12 +46,27 @@ a:hover {
 }
 
 .background {
-  background-image: url('https://i.imgur.com/iX9snKI.jpg');
   height: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   overflow-y: auto;
+}
+
+.bg-dark {
+  background-color: #424242 !important;
+}
+
+.bg-dark-0 {
+  background-color: #212121 !important;
+}
+
+.bg-dark-1 {
+  background-color: #484848 !important;
+}
+
+.bg-dark-2 {
+  background-color: #212121 !important;
 }
 
 .btn-teal {
@@ -60,15 +75,15 @@ a:hover {
 }
 
 .bg-black {
-  background: #000000 !important;
+  background: #424242 !important;
 }
 
 .bg-dark-transparent {
-  background: #000000b3 !important;
+  background: #212121b3 !important;
 }
 
 .custom-range::-moz-range-thumb {
-  background-color: white !important;
+  background-color: #73e6a0 !important;
 }
 
 .custom-range::-moz-range-track {

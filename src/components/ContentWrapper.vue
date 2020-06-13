@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper mx-auto">
-    <div class="container bg-dark-transparent rounded-lg p-4 d-flex">
+    <div class="container bg-dark-1 rounded-lg p-4 d-flex">
       <div class="m-2 text-center">
         <div
           class="mx-auto p-2"

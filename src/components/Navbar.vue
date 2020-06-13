@@ -1,5 +1,5 @@
 <template>
-  <b-navbar type="dark" class="bg-dark-transparent" sticky>
+  <b-navbar type="dark" class="bg-dark-2" sticky>
     <b-row class="d-flex w-100">
       <b-col>
         <div class="d-flex float-left">
@@ -26,11 +26,11 @@
     <b-sidebar
       id="sidebar-right"
       title="User Panel"
-      bg-variant="dark"
+      bg-variant="dark-0"
       text-variant="light"
       right
       sidebar-class="border-left-teal"
-      backdrop-variant="dark"
+      backdrop-variant="dark-0"
       backdrop
     >
       <div class="px-3 py-2">

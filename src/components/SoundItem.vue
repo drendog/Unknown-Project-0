@@ -1,5 +1,5 @@
 <template>
-  <div class="container bg-dark-transparent mx-auto p-4 h-100 rounded">
+  <div class="container bg-dark-2 mx-auto p-4 h-100 rounded">
     <b-row>
       <div class="mx-auto">
         <span v-bind:class="soundIcon" class="icon-sound-item"></span>

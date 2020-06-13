@@ -27,7 +27,7 @@ export default class PlayBtn extends Vue {}
 }
 
 .play:hover {
-  color: white;
+  color: #73e6a0;
   font-size: 7rem;
   cursor: pointer;
 }
