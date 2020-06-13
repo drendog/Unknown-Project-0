@@ -9,43 +9,38 @@
           Immersive sounds to help you study, focus, increase concentration,
           calm your mind.
         </p>
-        <div class="container p-3 bg-dark-2 rounded">
-          <div class="container">
-            <b-row>
-              <b-col class="my-auto">
-                <b-button
-                  pill
-                  :pressed.sync="$store.state.isVolumeRandom"
-                  v-b-tooltip.hover
-                  title="Random sounds volume"
-                  class="btn-xs"
-                  variant="outline-teal"
-                >
-                  <span
-                    class="mdi mdi-waveform"
-                    style="font-size: 24px;"
-                  ></span>
-                </b-button>
-              </b-col>
-              <b-col class="my-auto">
-                <PlayBtn />
-              </b-col>
-              <b-col class="my-auto">
-                <b-button
-                  pill
-                  v-b-tooltip.hover
-                  title="Markdown Editor Coming Soon..."
-                  :pressed="false"
-                  class="btn-xs"
-                  variant="outline-teal"
-                >
-                  <span
-                    class="mdi mdi-language-markdown-outline"
-                    style="font-size: 24px;"
-                  ></span>
-                </b-button>
-              </b-col>
-            </b-row>
+        <div class="container p-3 bg-dark-2 rounded" style="max-width: 90%;">
+          <div class="container d-flex">
+            <div class="m-auto" style="display: inline-block;">
+              <b-button
+                pill
+                :pressed.sync="$store.state.isVolumeRandom"
+                v-b-tooltip.hover
+                title="Random sounds volume"
+                class="btn-xs"
+                variant="outline-teal"
+              >
+                <span class="mdi mdi-waveform" style="font-size: 24px;"></span>
+              </b-button>
+            </div>
+            <div class="m-auto" style="display: inline-block;">
+              <PlayBtn />
+            </div>
+            <div class="m-auto" style="display: inline-block;">
+              <b-button
+                pill
+                v-b-tooltip.hover
+                title="Markdown Editor Coming Soon..."
+                :pressed="false"
+                class="btn-xs"
+                variant="outline-teal"
+              >
+                <span
+                  class="mdi mdi-language-markdown-outline"
+                  style="font-size: 24px;"
+                ></span>
+              </b-button>
+            </div>
           </div>
           <div class="container p-3" style="width: 70%;">
             <b-row>
