@@ -13,9 +13,3 @@ deploy:
   local_dir: dist
   on:
     branch: master
-
-language: node_js
-scripts:
-  - npm install codecov -g
-after_success:
-  - codecov
