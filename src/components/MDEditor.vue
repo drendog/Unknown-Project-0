@@ -1,6 +1,6 @@
 <template>
   <b-modal
-    id="MDModal"
+    id="MDEModal"
     header-bg-variant="dark-0"
     header-text-variant="light"
     body-bg-variant="dark-0"

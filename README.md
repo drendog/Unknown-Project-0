@@ -6,7 +6,7 @@ An ambient sound mixer to help you study, focus, increase concentration, calm yo
 
 ## Demo live
 
-[https://drendog.github.io/Unknown-Project-0/](https://drendog.github.io/Incomplete-Project-0/)
+[https://drendog.github.io/Unknown-Project-0/](https://drendog.github.io/Unknown-Project-0/)
 
 ## Project setup
 
