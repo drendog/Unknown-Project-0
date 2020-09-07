@@ -22,10 +22,9 @@
     <b-row>
       <div class="container text-center m-1 audio-info">
         <h6>
-          <hr style="margin: 0.25rem; border: 1px solid mediumseagreen;" />
-          Author: {{ author }}
-          <br />
-          Source: <a :href="sourceLink"> {{ source }}</a>
+          <hr style="margin: 0.25rem; border: 1px solid mediumseagreen" />
+          Author: {{ author }} <br />Source:
+          <a :href="sourceLink">{{ source }}</a>
           <br />
           <a :href="licenseLink">
             <span :class="license" class="text-white"></span>
@@ -57,14 +56,14 @@ export default class SoundItem extends Vue {
     this.audio = new Audio(this.soundPath);
   }
 
-  created() {
+  created(): void {
     this.volumeInput = this.volumeInit;
     this.audio.volume = this.volumeInput / 100;
 
     setInterval(this.randomVolume, 200);
   }
 
-  randomVolume() {
+  randomVolume(): void {
     if (
       this.$store.state.isVolumeRandom &&
       this.$store.state.isPlaying &&
@@ -81,7 +80,7 @@ export default class SoundItem extends Vue {
     }
   }
 
-  get isMuted() {
+  get isMuted(): boolean {
     return this.volumeInput <= 0;
   }
 
@@ -98,12 +97,12 @@ export default class SoundItem extends Vue {
   }
 
   @Watch('currentVolume')
-  onGlobalVolumeChanged(value: number) {
+  onGlobalVolumeChanged(value: number): void {
     this.audio.volume = value;
   }
 
   @Watch('$store.state.isPlaying')
-  onPlayingChanged(value: boolean) {
+  onPlayingChanged(value: boolean): void {
     if (!this.soundPath) {
       return;
     }

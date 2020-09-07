@@ -34,9 +34,7 @@
       backdrop
     >
       <div class="px-3 py-2">
-        <p>
-          Coming Soon...
-        </p>
+        <p>Coming Soon...</p>
         <b-img :src="require(`@/assets/Doge.webp`)" fluid thumbnail> </b-img>
       </div>
     </b-sidebar>
@@ -56,7 +54,7 @@ export default class Navbar extends Vue {
     this.$store.commit('updateGlobalVolume', value);
   }
 
-  get isMuted() {
+  get isMuted(): boolean {
     return this.globalVolume <= 0;
   }
 

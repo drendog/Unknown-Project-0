@@ -46,15 +46,15 @@ export default class MDEditor extends Vue {
     return marked(this.text);
   }
 
-  saveMD() {
+  saveMD(): void {
     this.download('MD_Notes.md', this.text);
   }
 
-  savePage() {
+  savePage(): void {
     this.download('Page_Notes.html', this.compiledMarkdown);
   }
 
-  download(filename: string, text: string) {
+  download(filename: string, text: string): void {
     const element = document.createElement('a');
     element.setAttribute(
       'href',
