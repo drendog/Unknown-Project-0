@@ -30,10 +30,11 @@
               <b-button
                 pill
                 v-b-tooltip.hover
-                title="Markdown Editor Coming Soon..."
+                title="Markdown Editor"
                 :pressed="false"
                 class="btn-xs"
                 variant="outline-teal"
+                v-b-modal.MDEModal
               >
                 <span
                   class="mdi mdi-language-markdown-outline"
@@ -47,6 +48,7 @@
               <b-col>
                 <b-button
                   :pressed="false"
+                  v-b-toggle.timers-collapse
                   v-b-tooltip.hover
                   title="Coming Soon..."
                   size="xs"
@@ -79,19 +81,25 @@
               </b-col>
             </b-row>
           </div>
+          <Timers />
         </div>
       </div>
     </div>
+    <MDEditor />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import PlayBtn from './PlayBtn.vue';
+import MDEditor from './MDEditor.vue';
+import Timers from './Timers.vue';
 
 @Component({
   components: {
     PlayBtn,
+    MDEditor,
+    Timers,
   },
 })
 export default class HeaderComp extends Vue {}
