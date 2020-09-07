@@ -4,7 +4,7 @@
       <div class="m-2 text-center">
         <div
           class="mx-auto p-2"
-          style="max-width: 30%; min-width: 15rem; display: inline-block;"
+          style="max-width: 30%; min-width: 15rem; display: inline-block"
           v-for="audio in $store.state.audios.audios"
           :key="audio.soundIcon"
         >
