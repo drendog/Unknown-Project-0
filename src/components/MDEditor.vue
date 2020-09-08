@@ -8,27 +8,38 @@
     footer-bg-variant="dark-0"
     footer-text-variant="light"
     size="xl"
-    title="Unknown Markdown Editor"
-  >
-    <div class="editor">
+    title="Unknown Markdown Editor">
+    <div
+      class="editor">
       <b-form-textarea
         id="textarea-auto-height"
-        class="md-textarea"
         v-model="text"
-      ></b-form-textarea>
-      <div class="compiled-md">
-        <div v-html="compiledMarkdown"></div>
+        class="md-textarea" />
+      <div
+        class="compiled-md">
+        <div
+          v-html="compiledMarkdown" />
       </div>
     </div>
-    <template v-slot:modal-footer="{ cancel }">
-      <b-button size="sm" variant="outline-teal" v-on:click="saveMD()">
+    <template
+      v-slot:modal-footer="{ cancel }">
+      <b-button
+        size="sm"
+        variant="outline-teal"
+        @click="saveMD()">
         Save as Markdown
       </b-button>
-      <b-button size="sm" variant="outline-teal" v-on:click="savePage()">
+      <b-button
+        size="sm"
+        variant="outline-teal"
+        @click="savePage()">
         Save as HTML
       </b-button>
       <!-- Button with custom close trigger value -->
-      <b-button size="sm" variant="outline-teal" @click="cancel()">
+      <b-button
+        size="sm"
+        variant="outline-teal"
+        @click="cancel()">
         Cancel
       </b-button>
     </template>
@@ -38,36 +49,37 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import marked from 'marked';
+
 @Component
 export default class MDEditor extends Vue {
   text = '# Markdown editor\n\n## Welcome to Markdown editor\n\nHave fun!';
 
-  get compiledMarkdown(): string {
-    return marked(this.text);
+  get compiledMarkdown (): string {
+  	return marked(this.text);
   }
 
-  saveMD(): void {
-    this.download('MD_Notes.md', this.text);
+  saveMD (): void {
+  	this.download('MD_Notes.md', this.text);
   }
 
-  savePage(): void {
-    this.download('Page_Notes.html', this.compiledMarkdown);
+  savePage (): void {
+  	this.download('Page_Notes.html', this.compiledMarkdown);
   }
 
-  download(filename: string, text: string): void {
-    const element = document.createElement('a');
-    element.setAttribute(
-      'href',
-      'data:text/plain;charset=utf-8,' + encodeURIComponent(text)
-    );
-    element.setAttribute('download', filename);
+  download (filename: string, text: string): void {
+  	const element = document.createElement('a');
+  	element.setAttribute(
+  		'href',
+  		`data:text/plain;charset=utf-8,${encodeURIComponent(text)}`
+  	);
+  	element.setAttribute('download', filename);
 
-    element.style.display = 'none';
-    document.body.appendChild(element);
+  	element.style.display = 'none';
+  	document.body.appendChild(element);
 
-    element.click();
+  	element.click();
 
-    document.body.removeChild(element);
+  	document.body.removeChild(element);
   }
 }
 </script>

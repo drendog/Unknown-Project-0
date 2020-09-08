@@ -1,24 +1,32 @@
 <template>
-  <b-navbar type="dark" class="bg-dark-2" sticky>
+  <b-navbar
+    type="dark"
+    class="bg-dark-2"
+    sticky>
     <b-row class="d-flex w-100">
       <b-col>
         <div class="d-flex float-left">
           <b-form-input
-            class="mx-2 my-auto"
             v-model="globalVolume"
+            class="mx-2 my-auto"
             type="range"
             min="0"
-            max="100"
-          ></b-form-input>
-          <b-button :pressed.sync="isMuted" variant="outline-teal" size="xs">
-            <b-icon-volume-mute-fill></b-icon-volume-mute-fill>
+            max="100" />
+          <b-button
+            :pressed.sync="isMuted"
+            variant="outline-teal"
+            size="xs">
+            <b-icon-volume-mute-fill />
           </b-button>
         </div>
       </b-col>
       <b-col>
         <div class="float-right">
-          <b-button v-b-toggle.sidebar-right variant="outline-teal" size="xs">
-            <b-icon-person></b-icon-person>
+          <b-button
+            v-b-toggle.sidebar-right
+            variant="outline-teal"
+            size="xs">
+            <b-icon-person />
           </b-button>
         </div>
       </b-col>
@@ -31,11 +39,13 @@
       right
       sidebar-class="border-left-teal"
       backdrop-variant="dark-0"
-      backdrop
-    >
+      backdrop>
       <div class="px-3 py-2">
         <p>Coming Soon...</p>
-        <b-img :src="require(`@/assets/Doge.webp`)" fluid thumbnail> </b-img>
+        <b-img
+          :src="require(`@/assets/Doge.webp`)"
+          fluid
+          thumbnail />
       </div>
     </b-sidebar>
   </b-navbar>
@@ -46,20 +56,20 @@ import { Component, Vue } from 'vue-property-decorator';
 
 @Component
 export default class Navbar extends Vue {
-  get globalVolume(): number {
-    return this.$store.state.globalVolume;
-  }
+	get globalVolume (): number {
+		return this.$store.state.globalVolume;
+	}
 
-  set globalVolume(value: number) {
-    this.$store.commit('updateGlobalVolume', value);
-  }
+	set globalVolume (value: number) {
+		this.$store.commit('updateGlobalVolume', value);
+	}
 
-  get isMuted(): boolean {
-    return this.globalVolume <= 0;
-  }
+	get isMuted (): boolean {
+		return this.globalVolume <= 0;
+	}
 
-  set isMuted(value: boolean) {
-    this.globalVolume = value ? 0 : 100;
-  }
+	set isMuted (value: boolean) {
+		this.globalVolume = value ? 0 : 100;
+	}
 }
 </script>

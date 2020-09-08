@@ -3,21 +3,19 @@
     <div class="container bg-dark-1 rounded-lg p-4 d-flex">
       <div class="m-2 text-center">
         <div
-          class="mx-auto p-2"
-          style="max-width: 30%; min-width: 15rem; display: inline-block"
           v-for="audio in $store.state.audios.audios"
           :key="audio.soundIcon"
-        >
+          class="mx-auto p-2"
+          style="max-width: 30%; min-width: 15rem; display: inline-block">
           <SoundItem
-            :soundIcon="audio.soundIcon"
-            :soundPath="audio.soundPath"
+            :sound-icon="audio.soundIcon"
+            :sound-path="audio.soundPath"
             :source="audio.source"
-            :sourceLink="audio.sourceLink"
+            :source-link="audio.sourceLink"
             :author="audio.author"
             :license="audio.licenseIcon"
-            :licenseLink="audio.licenseLink"
-            :volumeInit="audio.volume"
-          />
+            :license-link="audio.licenseLink"
+            :volume-init="audio.volume" />
         </div>
       </div>
     </div>
@@ -29,9 +27,9 @@ import { Component, Vue } from 'vue-property-decorator';
 import SoundItem from './SoundItem.vue';
 
 @Component({
-  components: {
-    SoundItem,
-  },
+	components: {
+		SoundItem
+	}
 })
 export default class ContentWrapper extends Vue {}
 </script>
