@@ -13,3 +13,7 @@ deploy:
   local_dir: dist
   on:
     branch: master
+
+- name: Codecov
+  uses: codecov/codecov-action@v1.0.13
+

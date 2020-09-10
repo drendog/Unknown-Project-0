@@ -1,14 +1,17 @@
 <template>
-  <div id="app">
-    <div class="background bg-dark-0">
+  <div
+    id="app">
+    <div
+      class="background bg-dark-0">
       <header>
         <Navbar />
         <HeaderComp />
       </header>
-      <main role="main">
+      <main
+        role="main">
         <ContentWrapper />
       </main>
-      <footer></footer>
+      <footer />
     </div>
   </div>
 </template>
@@ -20,11 +23,11 @@ import Navbar from './components/Navbar.vue';
 import ContentWrapper from './components/ContentWrapper.vue';
 
 @Component({
-  components: {
-    HeaderComp,
-    Navbar,
-    ContentWrapper,
-  },
+	components: {
+		HeaderComp,
+		Navbar,
+		ContentWrapper
+	}
 })
 export default class App extends Vue {}
 </script>

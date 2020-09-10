@@ -1,15 +1,15 @@
 <template>
-  <div v-if="$store.state.isPlaying">
+  <div
+    v-if="$store.state.isPlaying">
     <b-icon-pause-fill
       class="play"
-      @click="$store.commit('togglePlay')"
-    ></b-icon-pause-fill>
+      @click="$store.commit('togglePlay')" />
   </div>
-  <div v-else>
+  <div
+    v-else>
     <b-icon-play-fill
       class="play"
-      @click="$store.commit('togglePlay')"
-    ></b-icon-play-fill>
+      @click="$store.commit('togglePlay')" />
   </div>
 </template>
 
@@ -20,7 +20,7 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class PlayBtn extends Vue {}
 </script>
 
-<style>
+<style scoped>
 .play {
   color: mediumseagreen;
   font-size: 7rem;
