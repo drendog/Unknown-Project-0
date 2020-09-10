@@ -86,7 +86,9 @@ const store = new Vuex.Store({
 		globalVolume: 100,
 		isVolumeRandom: false,
 		isTimerStarted: false,
-		timeStart: new Date().getTime()
+		timeStart: new Date().getTime(),
+		timeDuration: 0,
+		isTimeToStop: false
 	},
 	mutations: {
 		togglePlay (state): void {
@@ -101,11 +103,16 @@ const store = new Vuex.Store({
 		startTimer (state): void {
 			state.timeStart = new Date().getTime();
 			state.isTimerStarted = true;
-			state.isPlaying = true;
+			state.isPlaying = state.isTimeToStop;
 		},
 		stopTimer (state): void {
 			state.isTimerStarted = false;
-			state.isPlaying = false;
+			state.isPlaying = !state.isTimeToStop;
+		}
+	},
+	getters: {
+		timeToStop (state) : number {
+			return state.timeStart + state.timeDuration;
 		}
 	}
 });

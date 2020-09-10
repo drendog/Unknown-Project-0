@@ -2,33 +2,39 @@
   <b-collapse
     id="timers-collapse">
     <b-card
-      v-if="!$store.state.isTimerStarted"
       class="m-auto bg-dark-1"
       style="max-width: 70%">
+      <TimerDisplay v-if="$store.state.isTimerStarted" />
       <b-tabs
+        v-else
         pills
         justified
         card
         active-nav-item-class="bg-dark-0">
         <b-tab
           title="Stop After"
+          lazy
           active>
           <b-card-text>
-            <TimerStartStop
-              :is-stop="true" />
+            <TimerStartStop :is-time-to-stop="true" />
           </b-card-text>
         </b-tab>
         <b-tab
-          title="Start After">
+          title="Start After"
+          lazy>
           <b-card-text>
-            <TimerStartStop
-              :is-stop="false" />
+            <TimerStartStop :is-time-to-stop="false" />
           </b-card-text>
         </b-tab>
         <b-tab
           title="Clock Settings">
           <b-card-text>
-            Tab contents 2
+            <b-button
+              size="s"
+              variant="outline-teal">
+              <b-spinner small />
+              Coming soon...
+            </b-button>
           </b-card-text>
         </b-tab>
       </b-tabs>
@@ -45,6 +51,16 @@
             <b>CANCEL</b>
           </b-button>
           <b-button
+            v-if="$store.state.isTimerStarted"
+            :pressed="false"
+            class="float-right"
+            size="s"
+            variant="outline-teal"
+            @click="$store.commit('stopTimer')">
+            <b>STOP TIMER</b>
+          </b-button>
+          <b-button
+            v-else
             :pressed="false"
             class="float-right"
             size="s"
@@ -61,10 +77,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import TimerStartStop from './Timers/TimerStartStop.vue';
+import TimerDisplay from './Timers/TimerDisplay.vue';
 
 @Component({
 	components: {
-		TimerStartStop
+		TimerStartStop,
+		TimerDisplay
 	}
 })
 export default class Timers extends Vue {}

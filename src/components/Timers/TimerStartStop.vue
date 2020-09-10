@@ -36,14 +36,27 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 
 @Component
 export default class TimerStartStop extends Vue {
-    @Prop() private isStop!: boolean;
-
+    @Prop() isTimeToStop!: boolean;
     hours = 0;
-    minutes = this.isStop ? 50 : 5;
+    minutes = this.isTimeToStop ? 50 : 5;
+
+    mounted (): void {
+    	this.$store.state.timeDuration = this.timeDuration;
+    	this.$store.state.isTimeToStop = this.isTimeToStop;
+    }
+
+    get timeDuration (): number {
+    	return this.hours * 3.6 * Math.pow(10, 6) + this.minutes * 60 * Math.pow(10, 3);
+    }
+
+    @Watch('timeDuration')
+    onGlobalVolumeChanged (): void {
+  	  this.$store.state.timeDuration = this.timeDuration;
+    }
 }
 </script>
 
