@@ -50,8 +50,8 @@
               </b-button>
             </div>
           </div>
-          <div
-            class="container p-3"
+          <b-container
+            class="p-3"
             style="width: 70%">
             <b-row>
               <b-col>
@@ -86,7 +86,7 @@
                 </b-button>
               </b-col>
             </b-row>
-          </div>
+          </b-container>
           <Timers />
         </div>
       </div>

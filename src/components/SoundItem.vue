@@ -1,5 +1,5 @@
 <template>
-  <div class="container bg-dark-2 mx-auto p-4 h-100 rounded">
+  <div id="soundItem">
     <b-row>
       <div class="mx-auto">
         <span
@@ -24,7 +24,7 @@
       </div>
     </b-row>
     <b-row>
-      <div class="container text-center m-1 audio-info">
+      <b-container class="text-center m-1 audio-info">
         <h6>
           <hr style="margin: 0.25rem; border: 1px solid mediumseagreen">
           Author: {{ author }}
@@ -37,7 +37,7 @@
               class="text-white" />
           </a>
         </h6>
-      </div>
+      </b-container>
     </b-row>
   </div>
 </template>
@@ -50,11 +50,11 @@ export default class SoundItem extends Vue {
   @Prop() private soundIcon!: string;
   @Prop() private soundPath!: string;
   @Prop() private source!: string;
-  @Prop() private author!: string;
-  @Prop() private sourceLink!: string;
-  @Prop() private license!: string;
-  @Prop() private licenseLink!: string;
-  @Prop() private volumeInit!: number;
+  @Prop() private author: string | undefined;
+  @Prop() private sourceLink: string | undefined;
+  @Prop() private license: string | undefined;
+  @Prop() private licenseLink: string | undefined;
+  @Prop({ default: 0 }) private volumeInit!: number;
 
   volumeInput = 0;
   audio: HTMLAudioElement;
