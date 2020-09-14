@@ -24,12 +24,7 @@
         title="YouTube"
         lazy>
         <b-card-text>
-          <b-button
-            size="s"
-            variant="outline-teal">
-            <b-spinner small />
-            Coming soon...
-          </b-button>
+          <AddYouTube />
         </b-card-text>
       </b-tab>
       <b-tab
@@ -50,9 +45,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import AddDirect from './AddItem/AddDirect.vue';
+import AddYouTube from './AddItem/AddYouTube.vue';
+
 @Component({
 	components: {
-		AddDirect
+		AddDirect,
+		AddYouTube
 	}
 })
 export default class AddNewItem extends Vue {}

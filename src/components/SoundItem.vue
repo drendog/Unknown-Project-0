@@ -1,9 +1,16 @@
 <template>
   <div id="soundItem">
+    <b-row
+      class="float-right">
+      <b-button-close
+        v-b-tooltip.hover
+        title="Remove"
+        @click="remove()" />
+    </b-row>
     <b-row>
       <div class="mx-auto">
         <span
-          :class="soundIcon"
+          :class="soundItem.soundIcon"
           class="icon-sound-item" />
       </div>
     </b-row>
@@ -27,13 +34,19 @@
       <b-container class="text-center m-1 audio-info">
         <h6>
           <hr style="margin: 0.25rem; border: 1px solid mediumseagreen">
-          Author: {{ author }}
-          <br>Source:
-          <a :href="sourceLink">{{ source }}</a>
+          <span
+            v-b-tooltip.hover
+            class="mdi mdi-account-music"
+            title="Author" />: {{ soundItem.author }}
+          <br><span
+            v-b-tooltip.hover
+            class="mdi mdi-web"
+            title="Source" />:
+          <a :href="soundItem.sourceLink">{{ soundItem.source }}</a>
           <br>
-          <a :href="licenseLink">
+          <a :href="soundItem.licenseLink">
             <span
-              :class="license"
+              :class="soundItem.licenseIcon"
               class="text-white" />
           </a>
         </h6>
@@ -44,39 +57,45 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
+import { IAudioStore } from '../SoundSources/audioStore';
 
 @Component
 export default class SoundItem extends Vue {
-  @Prop() private soundIcon!: string;
-  @Prop() private soundPath!: string;
-  @Prop() private source!: string;
-  @Prop() private author: string | undefined;
-  @Prop() private sourceLink: string | undefined;
-  @Prop() private license: string | undefined;
-  @Prop() private licenseLink: string | undefined;
-  @Prop({ default: 0 }) private volumeInit!: number;
+  @Prop() protected soundItem!: IAudioStore['audios'][0];
 
-  volumeInput = 0;
-  audio: HTMLAudioElement;
+  volumeInput = 70;
+  audio = new Audio();
+  state = 0;
 
-  constructor () {
-  	super();
-  	this.audio = new Audio(this.soundPath);
-  }
+  mounted (): void {
+  	this.audio = new Audio(this.soundItem.soundPath);
+  	this.state = this.audio.networkState;
 
-  created (): void {
-  	this.volumeInput = this.volumeInit;
+  	if (this.soundItem.volume !== undefined) {
+  		this.volumeInput = this.soundItem.volume;
+  	}
+
   	this.audio.volume = this.volumeInput / 100;
-
   	setInterval(this.randomVolume, 200);
   }
 
+  remove (): void {
+  	this.$store.commit('removeSoundItem', this.soundItem);
+  }
+
+  showAudioError (): void {
+  	this.$bvToast.toast(`Cannot load ${this.soundItem.soundPath}`, {
+  		title: 'Audio Error',
+  		variant: 'danger',
+  		autoHideDelay: 5000,
+  		appendToast: true
+  	});
+  }
+
   randomVolume (): void {
-  	if (
-  		this.$store.state.isVolumeRandom &&
+  	if (this.$store.state.isVolumeRandom &&
       this.$store.state.isPlaying &&
-      !this.isMuted
-  	) {
+      !this.isMuted) {
   		this.volumeInput += Math.random() * (2 + 2) - 2;
   		if (this.volumeInput > 100) {
   			this.volumeInput = 100;
@@ -111,10 +130,14 @@ export default class SoundItem extends Vue {
 
   @Watch('$store.state.isPlaying')
   onPlayingChanged (value: boolean): void {
-  	if (!this.soundPath) {
+  	if (!this.soundItem.soundPath) {
   		return;
   	}
   	if (value) {
+  		if (this.audio.networkState === 3) {
+  			this.showAudioError();
+  			return;
+  		}
   		this.audio.play();
   		this.audio.loop = true;
   	} else {

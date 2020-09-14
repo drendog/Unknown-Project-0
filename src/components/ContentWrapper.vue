@@ -8,14 +8,11 @@
           class="item mx-auto p-2">
           <b-container class="bg-dark-2 m-auto p-4 rounded">
             <SoundItem
-              :sound-icon="audio.soundIcon"
-              :sound-path="audio.soundPath"
-              :source="audio.source"
-              :source-link="audio.sourceLink"
-              :author="audio.author"
-              :license="audio.licenseIcon"
-              :license-link="audio.licenseLink"
-              :volume-init="audio.volume" />
+              v-if="audio.soundType == direct"
+              :sound-item="audio" />
+            <YouTubeItem
+              v-else-if="audio.soundType == youtube"
+              :sound-item="audio" />
           </b-container>
         </div>
         <div class="item mx-auto p-2">
@@ -52,13 +49,19 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import SoundItem from './SoundItem.vue';
+import YouTubeItem from './YouTubeItem.vue';
 import AddNewItem from './AddNewItem.vue';
+import { SOUND_TYPE } from '@/SoundSources/audioStore';
 
 @Component({
 	components: {
 		SoundItem,
-		AddNewItem
+		AddNewItem,
+		YouTubeItem
 	}
 })
-export default class ContentWrapper extends Vue {}
+export default class ContentWrapper extends Vue {
+  direct = SOUND_TYPE.DIRECT;
+  youtube = SOUND_TYPE.YOUTUBE;
+}
 </script>

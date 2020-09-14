@@ -73,7 +73,6 @@ a:hover {
 }
 
 .btn-teal {
-  color: #fff !important;
   background-color: mediumseagreen !important;
 }
 
@@ -95,6 +94,10 @@ a:hover {
 
 .border-left-teal {
   border-left: 2px solid mediumseagreen !important;
+}
+
+.border-teal {
+  border: 2px solid mediumseagreen !important;
 }
 
 .custom-range {

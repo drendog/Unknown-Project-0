@@ -5,6 +5,9 @@ import App from './App.vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import '@mdi/font/css/materialdesignicons.css'; // Ensure you are using css-loader
+import VueYouTubeEmbed from 'vue-youtube-embed';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 
 import { audioStore } from './SoundSources/audioStore';
 
@@ -14,6 +17,10 @@ Vue.use(Vuex);
 Vue.use(BootstrapVue);
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin);
+
+Vue.use(VueYouTubeEmbed);
+
+Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false;
 
@@ -31,6 +38,9 @@ const store = new Vuex.Store({
 		isTimeToStop: false
 	},
 	mutations: {
+		removeSoundItem (state, value): void {
+			store.commit('audios/removeSoundItem', value);
+		},
 		togglePlay (state): void {
 			state.isPlaying = !state.isPlaying;
 		},
