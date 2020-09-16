@@ -52,35 +52,48 @@
         </h6>
       </b-container>
     </b-row>
+    <youtube
+      v-if="soundItem.soundType == 1"
+      :video-id="soundItem.soundPath"
+      :player-width="0"
+      :player-height="0"
+      :player-vars="{playlist: soundItem.soundPath, loop: 1}"
+      style="display:none"
+      @ready="ready" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import { IAudioStore } from '../SoundSources/audioStore';
+import { Player, PlayerCreator } from './Player/Player';
 
-@Component
+@Component({
+	components: {
+	}
+})
 export default class SoundItem extends Vue {
   @Prop() protected soundItem!: IAudioStore['audios'][0];
 
   volumeInput = 70;
-  audio = new Audio();
   state = 0;
+  player: Player | undefined;
 
   mounted (): void {
-  	this.audio = new Audio(this.soundItem.soundPath);
-  	this.state = this.audio.networkState;
-
   	if (this.soundItem.volume !== undefined) {
   		this.volumeInput = this.soundItem.volume;
   	}
+  	this.player = PlayerCreator.getPlayer(this.soundItem.soundType, this.soundItem.soundPath, this.volumeInput);
 
-  	this.audio.volume = this.volumeInput / 100;
   	setInterval(this.randomVolume, 200);
   }
 
   remove (): void {
   	this.$store.commit('removeSoundItem', this.soundItem);
+  }
+
+  ready (event: Event): void {
+  	this.player?.onComponentReady(event);
   }
 
   showAudioError (): void {
@@ -124,8 +137,8 @@ export default class SoundItem extends Vue {
   }
 
   @Watch('currentVolume')
-  onGlobalVolumeChanged (value: number): void {
-  	this.audio.volume = value;
+  onCurrentVolumeChanged (value: number): void {
+  	this.player?.setVolume(value);
   }
 
   @Watch('$store.state.isPlaying')
@@ -134,17 +147,17 @@ export default class SoundItem extends Vue {
   		return;
   	}
   	if (value) {
-  		if (this.audio.networkState === 3) {
+  		if (!this.player?.isReady()) {
   			this.showAudioError();
   			return;
   		}
-  		this.audio.play();
-  		this.audio.loop = true;
+  		this.player?.play();
   	} else {
-  		this.audio.pause();
+  		this.player?.pause();
   	}
   }
 }
+
 </script>
 
 <style scoped>

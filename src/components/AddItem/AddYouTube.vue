@@ -20,7 +20,7 @@
       </b-input-group>
     </b-form>
     <b-alert
-      v-if="!isVideoValid"
+      v-if="isVideoValid === false"
       show
       variant="danger">
       This video is not valid.
@@ -43,7 +43,7 @@ export default class AddYouTube extends Vue {
     videoInfo: JSON | null = null;
     author = '';
     imageSrc = '';
-    isVideoValid = true;
+    isVideoValid: boolean | undefined;
 
     get videoId (): string {
     	return getIdFromURL(this.url);
@@ -61,7 +61,7 @@ export default class AddYouTube extends Vue {
     	this.$store.state.audios.audios.push({
     		id: Date.now(),
     		soundIcon: 'mdi mdi-youtube',
-    		soundPath: this.url,
+    		soundPath: this.videoId,
     		source: 'YouTube',
     		sourceLink: this.url,
     		author: this.author,
@@ -85,29 +85,12 @@ export default class AddYouTube extends Vue {
     		this.videoInfo = response.data;
     		this.author = response.data.author_name;
     		this.imageSrc = response.data.thumbnail_url;
+    		this.isVideoValid = true;
     		}).catch(() => {
     		this.isVideoValid = false;
     		this.author = '';
     		this.imageSrc = '';
     	});
-
-    	this.isVideoValid = true;
     }
-
-/*
-    get videoId (): string {
-    	return getIdFromURL(this.url);
-    }
-
-    ready (event: Event): void {
-    	// eslint-disable-next-line
-      (window as any).player = event.target;
-    	console.log('ridi');
-    }
-
-    addSource (): void {
-    	// eslint-disable-next-line
-    	(window as any).player.playVideo();
-    } */
 }
 </script>

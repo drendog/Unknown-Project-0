@@ -8,10 +8,6 @@
           class="item mx-auto p-2">
           <b-container class="bg-dark-2 m-auto p-4 rounded">
             <SoundItem
-              v-if="audio.soundType == direct"
-              :sound-item="audio" />
-            <YouTubeItem
-              v-else-if="audio.soundType == youtube"
               :sound-item="audio" />
           </b-container>
         </div>
@@ -49,15 +45,13 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import SoundItem from './SoundItem.vue';
-import YouTubeItem from './YouTubeItem.vue';
 import AddNewItem from './AddNewItem.vue';
 import { SOUND_TYPE } from '@/SoundSources/audioStore';
 
 @Component({
 	components: {
 		SoundItem,
-		AddNewItem,
-		YouTubeItem
+		AddNewItem
 	}
 })
 export default class ContentWrapper extends Vue {
