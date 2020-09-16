@@ -38,7 +38,7 @@
       <!-- Button with custom close trigger value -->
       <b-button
         size="sm"
-        variant="outline-teal"
+        variant="outline-secondary"
         @click="cancel()">
         Cancel
       </b-button>

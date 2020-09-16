@@ -47,7 +47,7 @@
             class="float-left"
             :pressed="false"
             size="s"
-            variant="outline-teal">
+            variant="outline-secondary">
             <b>CANCEL</b>
           </b-button>
           <b-button
@@ -55,7 +55,7 @@
             :pressed="false"
             class="float-right"
             size="s"
-            variant="outline-teal"
+            variant="outline-danger"
             @click="$store.commit('stopTimer')">
             <b>STOP TIMER</b>
           </b-button>
@@ -64,7 +64,7 @@
             :pressed="false"
             class="float-right"
             size="s"
-            variant="outline-teal"
+            variant="teal"
             @click="$store.commit('startTimer')">
             <b>START TIMER</b>
           </b-button>

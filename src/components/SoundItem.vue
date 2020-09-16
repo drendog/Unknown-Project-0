@@ -1,9 +1,16 @@
 <template>
-  <div class="container bg-dark-2 mx-auto p-4 h-100 rounded">
+  <div id="soundItem">
+    <b-row
+      class="float-right">
+      <b-button-close
+        v-b-tooltip.hover
+        title="Remove"
+        @click="remove()" />
+    </b-row>
     <b-row>
       <div class="mx-auto">
         <span
-          :class="soundIcon"
+          :class="soundItem.soundIcon"
           class="icon-sound-item" />
       </div>
     </b-row>
@@ -24,59 +31,84 @@
       </div>
     </b-row>
     <b-row>
-      <div class="container text-center m-1 audio-info">
+      <b-container class="text-center m-1 audio-info">
         <h6>
           <hr style="margin: 0.25rem; border: 1px solid mediumseagreen">
-          Author: {{ author }}
-          <br>Source:
-          <a :href="sourceLink">{{ source }}</a>
+          <span
+            v-b-tooltip.hover
+            class="mdi mdi-account-music"
+            title="Author" />: {{ soundItem.author }}
+          <br><span
+            v-b-tooltip.hover
+            class="mdi mdi-web"
+            title="Source" />:
+          <a :href="soundItem.sourceLink">{{ soundItem.source }}</a>
           <br>
-          <a :href="licenseLink">
+          <a :href="soundItem.licenseLink">
             <span
-              :class="license"
+              :class="soundItem.licenseIcon"
               class="text-white" />
           </a>
         </h6>
-      </div>
+      </b-container>
     </b-row>
+    <youtube
+      v-if="soundItem.soundType == 1"
+      :video-id="soundItem.soundPath"
+      :player-width="0"
+      :player-height="0"
+      :player-vars="{playlist: soundItem.soundPath, loop: 1}"
+      style="display:none"
+      @ready="ready" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
+import { IAudioStore } from '../SoundSources/audioStore';
+import { Player, PlayerCreator } from './Player/Player';
 
-@Component
+@Component({
+	components: {
+	}
+})
 export default class SoundItem extends Vue {
-  @Prop() private soundIcon!: string;
-  @Prop() private soundPath!: string;
-  @Prop() private source!: string;
-  @Prop() private author!: string;
-  @Prop() private sourceLink!: string;
-  @Prop() private license!: string;
-  @Prop() private licenseLink!: string;
-  @Prop() private volumeInit!: number;
+  @Prop() protected soundItem!: IAudioStore['audios'][0];
 
-  volumeInput = 0;
-  audio: HTMLAudioElement;
+  volumeInput = 70;
+  state = 0;
+  player: Player | undefined;
 
-  constructor () {
-  	super();
-  	this.audio = new Audio(this.soundPath);
-  }
-
-  created (): void {
-  	this.volumeInput = this.volumeInit;
-  	this.audio.volume = this.volumeInput / 100;
+  mounted (): void {
+  	if (this.soundItem.volume !== undefined) {
+  		this.volumeInput = this.soundItem.volume;
+  	}
+  	this.player = PlayerCreator.getPlayer(this.soundItem.soundType, this.soundItem.soundPath, this.volumeInput);
 
   	setInterval(this.randomVolume, 200);
   }
 
+  remove (): void {
+  	this.$store.commit('removeSoundItem', this.soundItem);
+  }
+
+  ready (event: Event): void {
+  	this.player?.onComponentReady(event);
+  }
+
+  showAudioError (): void {
+  	this.$bvToast.toast(`Cannot load ${this.soundItem.soundPath}`, {
+  		title: 'Audio Error',
+  		variant: 'danger',
+  		autoHideDelay: 5000,
+  		appendToast: true
+  	});
+  }
+
   randomVolume (): void {
-  	if (
-  		this.$store.state.isVolumeRandom &&
+  	if (this.$store.state.isVolumeRandom &&
       this.$store.state.isPlaying &&
-      !this.isMuted
-  	) {
+      !this.isMuted) {
   		this.volumeInput += Math.random() * (2 + 2) - 2;
   		if (this.volumeInput > 100) {
   			this.volumeInput = 100;
@@ -105,23 +137,27 @@ export default class SoundItem extends Vue {
   }
 
   @Watch('currentVolume')
-  onGlobalVolumeChanged (value: number): void {
-  	this.audio.volume = value;
+  onCurrentVolumeChanged (value: number): void {
+  	this.player?.setVolume(value);
   }
 
   @Watch('$store.state.isPlaying')
   onPlayingChanged (value: boolean): void {
-  	if (!this.soundPath) {
+  	if (!this.soundItem.soundPath) {
   		return;
   	}
   	if (value) {
-  		this.audio.play();
-  		this.audio.loop = true;
+  		if (!this.player?.isReady()) {
+  			this.showAudioError();
+  			return;
+  		}
+  		this.player?.play();
   	} else {
-  		this.audio.pause();
+  		this.player?.pause();
   	}
   }
 }
+
 </script>
 
 <style scoped>

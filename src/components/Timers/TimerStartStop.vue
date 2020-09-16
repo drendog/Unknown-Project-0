@@ -54,7 +54,7 @@ export default class TimerStartStop extends Vue {
     }
 
     @Watch('timeDuration')
-    onGlobalVolumeChanged (): void {
+    onTimeDurationChanged (): void {
   	  this.$store.state.timeDuration = this.timeDuration;
     }
 }
