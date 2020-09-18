@@ -60,6 +60,9 @@
       :player-vars="{playlist: soundItem.soundPath, loop: 1}"
       style="display:none"
       @ready="ready" />
+    <SoundCloud
+      v-if="soundItem.soundType == 2"
+      @ready="ready" />
   </div>
 </template>
 
@@ -67,9 +70,11 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import { IAudioStore } from '../SoundSources/audioStore';
 import { Player, PlayerCreator } from './Player/Player';
+import SoundCloud from './SoundCloud/SoundCloud.vue';
 
 @Component({
 	components: {
+		SoundCloud
 	}
 })
 export default class SoundItem extends Vue {
@@ -77,14 +82,13 @@ export default class SoundItem extends Vue {
 
   volumeInput = 70;
   state = 0;
-  player: Player | undefined;
+  player = PlayerCreator.getPlayer(this.soundItem.soundType, this.soundItem.soundPath, this.volumeInput);
 
   mounted (): void {
   	if (this.soundItem.volume !== undefined) {
   		this.volumeInput = this.soundItem.volume;
   	}
-  	this.player = PlayerCreator.getPlayer(this.soundItem.soundType, this.soundItem.soundPath, this.volumeInput);
-
+  	// this.mountPlayer();
   	setInterval(this.randomVolume, 200);
   }
 
@@ -92,7 +96,12 @@ export default class SoundItem extends Vue {
   	this.$store.commit('removeSoundItem', this.soundItem);
   }
 
-  ready (event: Event): void {
+  mountPlayer (): void {
+  	this.player = PlayerCreator.getPlayer(this.soundItem.soundType, this.soundItem.soundPath, this.volumeInput);
+  }
+
+  ready (event: Event | string): void {
+  	console.log('sounditem ready' + event);
   	this.player?.onComponentReady(event);
   }
 
@@ -147,7 +156,7 @@ export default class SoundItem extends Vue {
   		return;
   	}
   	if (value) {
-  		if (!this.player?.isReady()) {
+  		if (!this.player.isReady()) {
   			this.showAudioError();
   			return;
   		}

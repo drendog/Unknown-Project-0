@@ -30,12 +30,7 @@
       <b-tab
         title="SoundCloud">
         <b-card-text>
-          <b-button
-            size="s"
-            variant="outline-teal">
-            <b-spinner small />
-            Coming soon...
-          </b-button>
+          <SoundCloud />
         </b-card-text>
       </b-tab>
     </b-tabs>
@@ -46,11 +41,13 @@
 import { Component, Vue } from 'vue-property-decorator';
 import AddDirect from './AddItem/AddDirect.vue';
 import AddYouTube from './AddItem/AddYouTube.vue';
+import SoundCloud from './AddItem/AddSoundCloud.vue';
 
 @Component({
 	components: {
 		AddDirect,
-		AddYouTube
+		AddYouTube,
+		SoundCloud
 	}
 })
 export default class AddNewItem extends Vue {}
