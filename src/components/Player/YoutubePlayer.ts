@@ -42,4 +42,8 @@ export default class YoutubePlayer implements Player {
 		// eslint-disable-next-line
 		(window as any)[this.playerId].setVolume(this.volume);
 	}
+
+	onStateChange (state: unknown): void {
+		console.log('error get state ' + state);
+	}
 }

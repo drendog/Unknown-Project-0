@@ -69,5 +69,12 @@ const store = new Vuex.Store({
 
 new Vue({
 	store,
+	mounted () {
+		const scScript = document.createElement('script');
+		scScript.setAttribute('src', 'https://w.soundcloud.com/player/api.js');
+		scScript.async = true;
+		scScript.defer = true;
+		document.head.appendChild(scScript);
+	},
 	render: (h) => h(App)
 }).$mount('#app');

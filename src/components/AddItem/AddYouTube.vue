@@ -59,7 +59,7 @@ export default class AddYouTube extends Vue {
     	}
 
     	this.$store.state.audios.audios.push({
-    		id: Date.now(),
+    		id: Math.random().toString(36).substring(7),
     		soundIcon: 'mdi mdi-youtube',
     		soundPath: this.videoId,
     		source: 'YouTube',
