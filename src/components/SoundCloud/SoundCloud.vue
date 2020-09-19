@@ -26,7 +26,6 @@ export default class SoundCloud extends Vue {
     mounted (): void {
     	this.iframeRef = this.$refs[this.id] as HTMLIFrameElement;
     	this.$emit('compReady', this.iframeRef.id);
-    	console.log('ready id:' + this.iframeRef.id);
     }
 
     // eslint-disable-next-line

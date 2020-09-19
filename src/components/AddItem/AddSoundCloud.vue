@@ -84,7 +84,7 @@ export default class AddSoundCloud extends Vue {
     	this.getWidget().getCurrentSound((sound: any) => {
     		if (sound) {
     			this.isSoundValid = true;
-    			this.author = sound.genre;
+    			this.author = sound.label_name;
     			this.imageSrc = sound.artwork_url;
     		} else {
     			this.isSoundValid = false;
