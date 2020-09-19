@@ -62,14 +62,17 @@
       @ready="ready" />
     <SoundCloud
       v-if="soundItem.soundType == 2"
-      @ready="ready" />
+      :id="soundItem.id"
+      :url="soundItem.soundPath"
+      style="display:none"
+      @compReady="ready" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import { IAudioStore } from '../SoundSources/audioStore';
-import { Player, PlayerCreator } from './Player/Player';
+import { PlayerFactory } from './Player/Player';
 import SoundCloud from './SoundCloud/SoundCloud.vue';
 
 @Component({
@@ -82,22 +85,17 @@ export default class SoundItem extends Vue {
 
   volumeInput = 70;
   state = 0;
-  player = PlayerCreator.getPlayer(this.soundItem.soundType, this.soundItem.soundPath, this.volumeInput);
+  player = PlayerFactory.getPlayer(this.soundItem.soundType, this.soundItem.soundPath, this.volumeInput);
 
   mounted (): void {
   	if (this.soundItem.volume !== undefined) {
   		this.volumeInput = this.soundItem.volume;
   	}
-  	// this.mountPlayer();
   	setInterval(this.randomVolume, 200);
   }
 
   remove (): void {
   	this.$store.commit('removeSoundItem', this.soundItem);
-  }
-
-  mountPlayer (): void {
-  	this.player = PlayerCreator.getPlayer(this.soundItem.soundType, this.soundItem.soundPath, this.volumeInput);
   }
 
   ready (event: Event | string): void {

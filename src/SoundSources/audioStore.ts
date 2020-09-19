@@ -6,7 +6,7 @@ export enum SOUND_TYPE {
 
 export interface IAudioStore {
     audios: {
-		id: number;
+		id: string;
         soundIcon: string;
         soundPath: string;
         source: string;
@@ -20,12 +20,16 @@ export interface IAudioStore {
     }[];
 }
 
+function generateId (): string {
+	return Math.random().toString(36).substring(7);
+}
+
 export const audioStore = {
 	namespaced: true,
 	state: (): IAudioStore => ({
 		audios: [
 			{
-				id: Math.random(),
+				id: generateId(),
 				soundIcon: 'mdi mdi-weather-pouring',
 				soundPath:
           'https://freesound.org/data/previews/346/346562_3509815-lq.mp3',
@@ -38,7 +42,7 @@ export const audioStore = {
 				soundType: SOUND_TYPE.DIRECT
 			},
 			{
-				id: Date.now(),
+				id: generateId(),
 				soundIcon: 'mdi mdi-weather-lightning',
 				soundPath:
           'https://freesound.org/data/previews/102/102806_649468-lq.mp3',
@@ -51,7 +55,7 @@ export const audioStore = {
 				soundType: SOUND_TYPE.DIRECT
 			},
 			{
-				id: Date.now(),
+				id: generateId(),
 				soundIcon: 'mdi mdi-weather-windy',
 				soundPath:
           'https://freesound.org/data/previews/117/117307_2095945-lq.mp3',
@@ -64,7 +68,7 @@ export const audioStore = {
 				soundType: SOUND_TYPE.DIRECT
 			},
 			{
-				id: Date.now(),
+				id: generateId(),
 				soundIcon: 'mdi mdi-spin mdi-fan',
 				soundPath:
           'https://freesound.org/data/previews/324/324220_3722909-lq.mp3',
@@ -78,7 +82,7 @@ export const audioStore = {
 				soundType: SOUND_TYPE.DIRECT
 			},
 			{
-				id: Date.now(),
+				id: generateId(),
 				soundIcon: 'mdi mdi-spin mdi-loading',
 				soundPath: '',
 				source: 'Coming Soon',

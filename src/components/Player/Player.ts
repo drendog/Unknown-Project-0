@@ -7,13 +7,13 @@ export interface Player {
     url: string;
     volume: number;
     onComponentReady(event: Event | string): void;
-    isReady(): boolean;
+    isReady(): boolean | undefined;
     play(): void;
     pause(): void;
     setVolume(value: number): void;
 }
 
-export class PlayerCreator {
+export class PlayerFactory {
     private static player: Player;
     static getPlayer (type: number, url: string, volume: number): Player {
     	switch (type) {

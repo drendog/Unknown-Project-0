@@ -3,49 +3,67 @@ import { Player } from './Player';
 export default class SoundCloudPlayer implements Player {
 	url: string;
 	volume: number;
-	isComponentReady = false;
-	playerId = '';
-	scFrame = 'kakka';
+	scFrameId: string | undefined;
+	scWidget: unknown;
+	isWidgetReady: boolean | undefined;
 
 	constructor (url: string, volume: number) {
 		this.url = url;
 		this.volume = volume * 100;
-		this.playerId = Math.random().toString(36).substring(7);
-		console.log('ops');
 	}
 
-	onComponentReady (arg: string): void {
-		console.log('pirlotto' + arg);
-		this.scFrame = arg;
-		console.log('pirlotto2' + this.scFrame);
-
-		this.isComponentReady = true;
+	onComponentReady (frameId: string): void {
+		this.scFrameId = frameId;
 		// eslint-disable-next-line
-		(window as any).SC.Widget(this.scFrame);
+		this.setWidget((window as any).SC.Widget(this.scFrameId));
+		this.bindUIState();
 		console.log('sc ready');
 	}
 
-	isReady (): boolean {
-		return true;
+	bindUIState (): void {
+		// loop
+		this.getWidget().bind(this.getWidgetEvents().FINISH, () => {
+    		this.getWidget().play();
+		});
+		this.getWidget().bind(this.getWidgetEvents().READY, () => {
+    		this.isWidgetReady = true;
+		});
+		this.getWidget().bind(this.getWidgetEvents().ERROR, () => {
+    		this.isWidgetReady = false;
+		});
+	}
+
+	// eslint-disable-next-line
+	getWidget (): any {
+		return this.scWidget;
+	}
+
+	setWidget (widget: unknown): void {
+		this.scWidget = widget;
+	}
+
+	// eslint-disable-next-line
+	getWidgetEvents (): any {
+		// eslint-disable-next-line
+		return (window as any).SC.Widget.Events;
+	}
+
+	isReady (): boolean | undefined {
+		return this.isWidgetReady;
 	}
 
 	play (): void {
-		console.log(this.scFrame);
-		// eslint-disable-next-line
-		(window as any).SC.Widget((this.scFrame?.toString())).play();
-		// (this.scFrame as any).play();
+		this.getWidget().play();
 		this.setVolume(this.volume);
 		console.log('sc play');
 	}
 
 	pause (): void {
-		// eslint-disable-next-line
-		(window as any).SC.Widget(this.scFrame).pause();
+		this.getWidget().pause();
 	}
 
 	setVolume (value: number): void {
 		this.volume = value * 100;
-		// eslint-disable-next-line
-		(window as any).SC.Widget(this.scFrame).setVolume(this.volume);
+		this.getWidget().setVolume(this.volume);
 	}
 }

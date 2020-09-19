@@ -32,7 +32,7 @@ export default class AddDirect extends Vue {
 
     addSource (): void {
     	this.$store.state.audios.audios.push({
-    		id: Date.now(),
+    		id: Math.random().toString(36).substring(7),
     		soundIcon: 'mdi mdi-link-variant',
     		soundPath: this.url,
     		source: 'Direct Link',

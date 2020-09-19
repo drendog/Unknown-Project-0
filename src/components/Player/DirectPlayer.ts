@@ -36,4 +36,8 @@ export default class DirectPlayer implements Player {
     	console.log('Component Ready on Direct?');
     	console.log(event.target);
     }
+
+    onStateChange (state: unknown): void {
+    	console.log('error get state ' + state);
+    }
 }
